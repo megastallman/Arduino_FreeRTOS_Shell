@@ -10,19 +10,6 @@ help
 reset
 ps (displaying the process's high watermark)
 ```
-
-TODO:
-```
-ls
-rm
-picview
-cd
-mkdir
-touch
-...maybe some more commands, if necessary.
-```
-
 Dependencies:
-- Arduino SD library
 - Arduino FreeRTOS package
 - https://github.com/Bodmer/TFT_HX8357, cloned to the libraries directory

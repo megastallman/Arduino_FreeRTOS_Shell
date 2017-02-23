@@ -1,6 +1,7 @@
 #include <Arduino_FreeRTOS.h>
-#include <TFT_HX8357.h>
 #include <queue.h>
+//#include <SPI.h>
+#include <TFT_HX8357.h>
 
 TFT_HX8357 tft = TFT_HX8357();
 const uint8_t LED_PIN = 13;
@@ -27,7 +28,6 @@ QueueHandle_t SHELL2SerialQueue;
 static void vLEDFlashTask(void *pvParameters) {
 
   pinMode(LED_PIN, OUTPUT);
-
   for (;;) {
     digitalWrite(LED_PIN, HIGH);
     vTaskDelay( 500 / portTICK_PERIOD_MS );
@@ -74,9 +74,9 @@ static void vGraphicsTask(void *pvParameters) {
 }
 //------------------------------------------------------------------------------
 void setup() {
+  //Serial init
   Serial.begin(9600);
   while (!Serial) {}
-  //Serial.println("Begin...");
 
   // create queue
   LCDQueue = xQueueCreate( lcdLineLength, sizeof( char * ) ); //just 1 message in a queue
@@ -288,10 +288,7 @@ static void vShellTask(void *pvParameters) {
           lineNo = lineNo + 5;
           commandnotfoundFlag = 0;
         }
-        
-        // Processing the ls command
-        // Processing the rm <filename> command
-        // Processing the picview <fielname> command
+
 
         // Command not found
         if(commandnotfoundFlag == 1){
@@ -312,3 +309,4 @@ static void vShellTask(void *pvParameters) {
       }
     }
 }
+
